@@ -22,7 +22,9 @@ export class AuthInterceptor implements HttpInterceptor {
     if (token) {
       headers = headers.set('Authorization', `Bearer ${token}`);
     }
-    if (tenant && token) {
+    
+  const isUserInfoRequest = req.url.includes('/userinfo');
+    if (tenant && token && !isUserInfoRequest) {
        headers = headers.set('X-Tenant-ID', tenant);
     }
 

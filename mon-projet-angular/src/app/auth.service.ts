@@ -6,6 +6,7 @@ import { AuthInterceptor } from './auth.interceptor';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private currentTenant : any;
+  private userProfile: any;
 
   constructor(private oauthService: OAuthService ) {}
 
@@ -44,8 +45,16 @@ export class AuthService {
     this.oauthService.logOut();
   }
 
-  get identityClaims() {
-    return this.oauthService.loadUserProfile();
+  // get identityClaims() {
+  //   return this.oauthService.loadUserProfile();
+  // }
+
+  async loadUserProfile() {
+    this.userProfile = await this.oauthService.loadUserProfile();
+  }
+
+  get userInfo(): any {
+    return this.userProfile;
   }
 
   get isLoggedIn(): boolean {
